@@ -8,27 +8,23 @@
 
 
 
-  const DEFAULT_VALUES = [ "0" , "1", "2" , "3" , "4" , "5" , "6" , "7", "8" ];
+  
 
-  export default () => {
+  export default ( {squares,updateSquares}) => {
     
-      const status = 'Next player: X';
-      const [squares,setSquares] = useState( DEFAULT_VALUES );
+      const status = " Winner : "+calculateWinner(squares); 
+
       const [currentPlayer,setCurrentPlayer] = useState(1);
 
       const renderSquare =  (i) => {
         return (<Square cell={i} onClick={fillValue} />);
       }
 
-      const fillValue =  (index) => {
-        
-        const newSquares = [...squares];
-        newSquares[index] = currentPlayer == 1 ? 'X' : 'O';
-        console.log('newSquares ',newSquares);
-        setSquares(newSquares);
+      const fillValue =  (index) => {        
+        updateSquares(index,currentPlayer);
         setCurrentPlayer(currentPlayer == 1  ? 0: 1 );
       }
-      
+
       return (
         <div>
           <div className="status">{status}</div>
@@ -51,3 +47,23 @@
       );
   }
   
+
+  function calculateWinner(squares) {
+    const lines = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
+    for (let i = 0; i < lines.length; i++) {
+      const [a, b, c] = lines[i];
+      if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+        return squares[a];
+      }
+    }
+    return null;
+  }
