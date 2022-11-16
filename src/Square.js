@@ -2,10 +2,11 @@
   
 import React from "react";
   
-export default () =>  {
+export default ({cell,onClick}) =>  {
+      
       return (
-        <button className="square">
-          {/* TODO */}
+        <button data-cell={cell} className="square" onClick={ () => { onClick(cell) }} >
+          {cell}
         </button>
       );
 }
