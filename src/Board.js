@@ -1,6 +1,6 @@
 
   
-  import React , {useState} from "react";
+  import React  from "react";
 
   import Square from "./Square";
   
@@ -10,19 +10,17 @@
 
   
 
-  export default ( {squares,updateSquares}) => {
+  export default ( {squares,updateSquares,currentPlayer}) => {
     
       const status = " Winner : "+calculateWinner(squares); 
-
-      const [currentPlayer,setCurrentPlayer] = useState(1);
 
       const renderSquare =  (i) => {
         return (<Square cell={i} onClick={fillValue} />);
       }
 
-      const fillValue =  (index) => {        
-        updateSquares(index,currentPlayer);
-        setCurrentPlayer(currentPlayer == 1  ? 0: 1 );
+      const fillValue =  (index) => { 
+        const nextPlayer = currentPlayer == 1  ? 0: 1   ;
+        updateSquares(index,nextPlayer);
       }
 
       return (
